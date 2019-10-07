@@ -1,0 +1,10 @@
+<!-- templates/videogames_index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Videogames</h1>
+    {% for videogame in videogame %}
+        <h2>{{ videogame.title }}</h2>
+        <small>{{ videogame.price }}</small>
+    {% endfor %}
+{% endblock %}

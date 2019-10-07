@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!-- TODO: Make an HTML form containing a search box and a submit button to add
+  the search term to the query string -->
+{% block content %}
+  <div id="loading"></div>
+  <h1><span class = "header">GameMania</span></h1>
+
+  <form class="" action="/">
+    <!-- <padding-top: 10px;
+padding-right: 5px;
+padding-bottom: 3px;
+padding-left: 2px;> -->
+
+    <input type="search" class="searchbar" name="search" placeholder="Search..."/>
+    <button type="submit" class="searchbox">Search</button>
+  </form>
