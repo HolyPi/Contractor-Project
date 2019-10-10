@@ -17,7 +17,7 @@ videogames.insert_many(
     # {'title': 'Danganronpa trilogy', 'price': 59.99, 'image': <img src= "Danganronpa.jpg" height="42" width="42">},
     # {'title': 'Ace attorney', 'price': 14.99, 'image': <img src= "ACE.jpg" height="42" width="42">},
     # {'title': 'The World Ends With You', 'price': 27.99, 'image': <img src= "TWEWY.jpg" height="42" width="42">},
-    # {'title': 'Yakuza 0', 'price': 14.49, 'image': <img src= "Yakuza0.jpg" height="42" width="42">},
+    # {'title': 'Yakuza 0', 'price': 14.49, 'image': <img src= "Yakuza0.gjpg" height="42" width="42">},
     # {'title': 'Fire Emblem Fates Birthright', 'price': 19.99, 'image': <img src= "FEB.jpg" height="42" width="42">} ])
 
 # client = MongoClient('mongodb://localhost:27017/')
