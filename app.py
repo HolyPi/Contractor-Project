@@ -3,16 +3,15 @@ from flask_pymongo import PyMongo
 from pymongo import MongoClient
 
 app = Flask(__name__)
-client = MongoClient('localhost')
-mongo = PyMongo(app)
-db = client.videogame
-inventory = db.videogames
+client = MongoClient()
+db = client.get_default_database('GameMania')
+videogames = db.videogames
 
 
-cart = ShoppingCart.get()
+# cart = ShoppingCart.get()
 videogames.delete_many({})
-videogames.insert_many( [
-    {'title': 'Persona 3', 'price': 22.22, } ])
+videogames.insert_many(
+    [{'title': 'Persona 3', 'price': 22.22, 'image': "https://images-na.ssl-images-amazon.com/images/I/81yTRFRr23L.AC_SL1500_.jpg"} ])
     # {'title': 'Persona 5', 'price': 59.99, 'image': <img src= "P5.jpg" height="42" width="42">},
     # {'title': 'Metal Gear Solid Snake Eater', 'price': 14.99, 'image': <img src= "MTGS.png" height="42" width="42">},
     # {'title': 'Danganronpa trilogy', 'price': 59.99, 'image': <img src= "Danganronpa.jpg" height="42" width="42">},
@@ -26,7 +25,7 @@ videogames.insert_many( [
 @app.route('/')
 def videogame_index():
     """Show all playlists."""
-    return render_template('index.html', videogame=videogame)
+    return render_template('videogame_index.html', videogame=videogames.find())
 
 @app.route("/cart/add", methods=['POST'])
 def add_to_cart():
