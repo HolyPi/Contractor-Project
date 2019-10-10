@@ -8,6 +8,7 @@ client = MongoClient()
 db = client.get_default_database('GameMania')
 videogames = db.videogames
 cart = db.cart
+cart.delete_many({})
 
 videogames.delete_many({})
 videogames.insert_many(
@@ -35,24 +36,28 @@ def videogame_show(videogame_id):
 
 
 
-@app.route("/cart/add", methods=['POST'])
+@app.route("/videogame/<videogame_id>/cart", methods=['POST'])
 def add_to_cart():
     "Adds to the cart"
     cart.add(product=request.form['product'], quantity=int(request.form['quantity']))
-    return jsonify(cart)
+    return
 
 
 @app.route("/cart")
 def view_cart():
     "Views cart"
-    cart.get()
-    return render_template("cart.html", cart=cart)
+    total = 0
+    for videogame in cart.find():
+        total += int(videogame['price'])
+    if cart.count_documents({}) <= 0:
+        Nothing = "Nothing inside your cart"
+    return render_template("cart.html", cart=cart.find(), total = total, Nothing = Nothing)
 
-@app.route("/cart/remove/<item_id>", methods=['POST'])
-def remove_from_cart(item_id):
+@app.route("/cart/remove/<videogame_id>", methods=['POST'])
+def remove_from_cart(videogame_id):
     "Removes from cart"
-    cart = ShoppingCart.remove(item_id)
-    return jsonify(cart)
+    cart = ShoppingCart.delete_one(videogame_id)
+    return
 
 # @app.route("/videogames", methods = ['GET'])
 # def show_videogame(title):

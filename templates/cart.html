@@ -1,22 +1,16 @@
-<h2>MY SHOPPING CART </h2>
-{% if cart.count <= 0 %}
-<h1>No Items in your cart yet</h1>
-{% else %}
-<div class="cart-gd">
-    {% for item in cart.items %}
-    <div class="cart-header" id="{{videogame.id}}" >
+<!-- templates/partials/cart.html -->
+<h2> SHOPPING CART </h2>
+<h2>{{ Nothing }}</h2>
 
-        <a href="#" class="close1 deleteItem" data-item-id="{{videogame.id}}"> </a>
-        <div class="cart-sec simpleCart_shelfItem">
-            <div class="cart-item cyc">
-                <img src="{{videogame.image.url}}" class="img-responsive" alt="" />
+<div class="cart-gd">
+    {% for videogame in cart.videogames %}
+    <div class="cart-header" id="{{ videogame.id }}" >
+
+        <a href="#" class="deleteItem" data-item-id="{{ videogame.id }}"> </a>
+                <img src="{{ videogame.image }}" />
             </div>
-            <div class="cart-item-info">
                 <h3><a href="#"> {{ videogame.title }} </a></h3>
-                <div class="delivery">
                     <p><span>Unit price : $</span> <span >{{ videogame.price }}</span></p>
-                    <div class="clearfix"></div>
-                    <p><span>Quantity : </span> <span >{{ videogame.quantity }}</span></p>
                     <div class="clearfix"></div>
                     <p><span>Total price : $</span> <span >{{ videogame.total }}</span></p>
                     <div class="clearfix"></div>
@@ -31,4 +25,3 @@
         <a href="/checkout" class="big_button">Checkout</a>
     </div>
 </div>
-{% endif %}
