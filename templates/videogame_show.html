@@ -4,8 +4,9 @@
 {% block content %}
 <a href='/'>Back to Home</a>
 
-<h1>{{ videogame.title }}</h1>
-<h5>{{ videogame.price }}</h5>
+<h1 style="font-size: 72px;">{{ videogame.title }}</h1>
+<img src = {{ videogame.image }} height="450", width="350"  >
+<h2><strong>Price:  ${{ videogame.price }}</strong></h2>
 {% for videogame in videogames %}
 {% endfor %}
 {% endblock %}
