@@ -7,6 +7,6 @@
 <h1 style="font-size: 72px;">{{ videogame.title }}</h1>
 <img src = {{ videogame.image }} height="450", width="350"  >
 <h2><strong>Price:  ${{ videogame.price }}</strong></h2>
-{% for videogame in videogames %}
-{% endfor %}
+<a href="{{ videogame._id }}/purchase" role="button">Add to cart</a>
+</div>
 {% endblock %}
