@@ -1,18 +1,23 @@
 <!-- templates/partials/cart.html -->
+{% extends 'base.html' %}
+
+{% block content %}
 <h2> SHOPPING CART </h2>
 <h2>{{ Nothing }}</h2>
 
 <div class="cart-gd">
-    {% for videogame in cart.videogames %}
+    {% for videogame in cart %}
     <div class="cart-header" id="{{ videogame.id }}" >
 
-        <a href="#" class="deleteItem" data-item-id="{{ videogame.id }}"> </a>
-                <img src="{{ videogame.image }}" />
+      <p><form method="POST" action="/cart/{{ videogame._id }}/delete">
+              <input type = "hidden" name="_method" value="DELETE">
+              <button class = "btn btn-primary" type="submit">Remove from Cart</button>
+                <img src="{{ videogame.image }}" height="250", width="200" />
             </div>
                 <h3><a href="#"> {{ videogame.title }} </a></h3>
                     <p><span>Unit price : $</span> <span >{{ videogame.price }}</span></p>
                     <div class="clearfix"></div>
-                    <p><span>Total price : $</span> <span >{{ videogame.total }}</span></p>
+                    ​<p><span>Total price : $</span> <span >{{ videogame.total }}</span></p>
                     <div class="clearfix"></div>
                 </div>
             </div>
@@ -21,7 +26,8 @@
         </div>
     </div>
     {% endfor %}
-    <div style="margin-top: 50px; text-align: right;">
+    <div style="margin-center: 50px; text-align: right;">
         <a href="/checkout" class="big_button">Checkout</a>
     </div>
 </div>
+{% endblock %}

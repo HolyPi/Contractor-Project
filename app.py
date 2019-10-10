@@ -36,30 +36,49 @@ def videogame_show(videogame_id):
 
 
 
-@app.route("/videogame/<videogame_id>/cart", methods=['POST'])
-def add_to_cart():
+@app.route("/videogame/<videogame_id>/purchase", methods=['GET'])
+def add_to_cart(videogame_id):
     "Adds to the cart"
-    cart.add(product=request.form['product'], quantity=int(request.form['quantity']))
-    return
+    game = videogames.find_one({'_id': ObjectId(videogame_id)})
+    print(game)
+    cartGame = {
+        'title': game.get('title'),
+        'price': game.get('price'),
+        'image': game.get('image')
+
+    }
+    cart.insert_one(cartGame)
+    return redirect(url_for('videogame_index'))
 
 
 @app.route("/cart")
 def view_cart():
     "Views cart"
     total = 0
+    Nothing = ""
     for videogame in cart.find():
         total += int(videogame['price'])
     if cart.count_documents({}) <= 0:
         Nothing = "Nothing inside your cart"
     return render_template("cart.html", cart=cart.find(), total = total, Nothing = Nothing)
 
-@app.route("/cart/remove/<videogame_id>", methods=['POST'])
+@app.route("/cart/<videogame_id>/delete", methods=['POST'])
 def remove_from_cart(videogame_id):
     "Removes from cart"
-    cart = ShoppingCart.delete_one(videogame_id)
-    return
+    cart.delete_one({'_id':ObjectId(videogame_id)})
+    return redirect(url_for('view_cart'))
 
-# @app.route("/videogames", methods = ['GET'])
-# def show_videogame(title):
-#         videogame = db.videogame.find({}
-#     return render_template('videogame_title.html', videogame = videogame)
+@app.route("/checkout/purchase")
+def view_purchase():
+    cart = 0
+    return render_template('purchase.html')
+
+@app.route("/checkout")
+def checkout_cart(videogame_id):
+    if cart.count_documents({}) <= 0:
+        Nothing = "You currently have nothing inside your cart"
+    return render(url_for('view_cart'))
+
+    if videogame in cart.find():
+        total > 0
+    return redirect(url_for('view_purchase'))
