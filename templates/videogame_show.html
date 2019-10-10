@@ -1,0 +1,11 @@
+<!-- templates/playlists_show.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<a href='/'>Back to Home</a>
+
+<h1>{{ videogame.title }}</h1>
+<h5>{{ videogame.price }}</h5>
+{% for videogame in videogames %}
+{% endfor %}
+{% endblock %}

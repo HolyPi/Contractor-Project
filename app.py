@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 client = MongoClient()
@@ -23,22 +24,33 @@ videogames.insert_many(
 
 @app.route('/')
 def videogame_index():
-    """Show all playlists."""
+    """Show all videogames."""
     return render_template('videogame_index.html', videogame=videogames.find())
+
+@app.route('/videogame/<videogame_id>', methods=['GET'])
+def videogame_show(videogame_id):
+    "Individual Videogame"
+    videogame = videogames.find_one({'_id': ObjectId(videogame_id)})
+    return render_template('videogame_show.html', videogame=videogame)
+
+
 
 @app.route("/cart/add", methods=['POST'])
 def add_to_cart():
+    "Adds to the cart"
     cart.add(product=request.form['product'], quantity=int(request.form['quantity']))
     return jsonify(cart)
 
 
 @app.route("/cart")
 def view_cart():
+    "Views cart"
     cart.get()
     return render_template("cart.html", cart=cart)
 
 @app.route("/cart/remove/<item_id>", methods=['POST'])
 def remove_from_cart(item_id):
+    "Removes from cart"
     cart = ShoppingCart.remove(item_id)
     return jsonify(cart)
 
