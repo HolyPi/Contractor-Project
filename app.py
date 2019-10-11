@@ -67,7 +67,7 @@ def view_cart():
         total += int(videogame['price']) * (item['quantity'])
     if cart.count_documents({}) <= 0:
         Nothing = "Nothing inside your cart"
-    return render_template("cart.html", videogame=videogame, cart=cart.count_documents({}), cart=cart.find(), total = total, Nothing = Nothing)
+    return render_template("cart.html", videogame=videogame, cart=cart.count_documents({}),cart=cart.find(), total = total, Nothing = Nothing)
 
 @app.route("/cart/<videogame_id>/delete", methods=['POST'])
 def remove_from_cart(videogame_id):
