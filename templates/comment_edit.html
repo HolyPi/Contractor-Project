@@ -1,0 +1,25 @@
+<!-- templates/comment_edit.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<form method='POST' action='/videogame/comments/{{comment._id}}'>
+    <fieldset>
+        <legend>Edit Comment</legend>
+        <!-- TITLE -->
+        <p>
+            <label for='comment-title'>Title</label><br>
+            <input id='comment-title' type='text' name='title' value='{{ comment.title }}'/>
+        </p>
+
+        <!-- DESCRIPTION -->
+        <p>
+            <label for='content'>Content</label><br>
+            <input id='content' type='text' name='content' value='{{ comment_content }}' />
+        </p>
+
+    <!-- BUTTON -->
+    <p>
+        <button type='submit'>Save Comment</button>
+    </p>
+</form>
+{% endblock %}

@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>Videogames</h1>
-    {% for videogame in videogame %}
+    {% for videogame in videogames %}
         <h2><a href="/videogame/{{ videogame._id }}">{{ videogame.title }}<a></h2>
         <img src = {{ videogame.image }} height="320", width="240"  >
         <small>{{ videogame.price }}</small>

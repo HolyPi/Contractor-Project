@@ -1,4 +1,4 @@
-<!-- templates/playlists_show.html -->
+<!-- templates/videogame_show.html -->
 {% extends 'base.html' %}
 
 {% block content %}
@@ -9,4 +9,16 @@
 <h2><strong>Price:  ${{ videogame.price }}</strong></h2>
 <a href="{{ videogame._id }}/purchase" role="button">Add to cart</a>
 </div>
+<p><a href='/comments/{{ comment._id }}/edit'>Edit</a></p>
 {% endblock %}
+
+
+    <!-- Comment form -->
+    {% include 'partials/comment_form.html' %}
+
+       <hr>
+
+       <!-- Show Comments -->
+       {% for comment in comments %}
+           {% include 'partials/comment.html' %}
+       {% endfor %}
