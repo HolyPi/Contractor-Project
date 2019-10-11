@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/videogame-jc')
+host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/videogames')
 client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 # client = MongoClient()
