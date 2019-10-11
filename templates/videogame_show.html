@@ -12,13 +12,11 @@
 <p><a href='/comments/{{ comment._id }}/edit'>Edit</a></p>
 {% endblock %}
 
+{% include 'partials/comment_form.html' %}
 
-    <!-- Comment form -->
-    {% include 'partials/comment_form.html' %}
+    <hr>
 
-       <hr>
-
-       <!-- Show Comments -->
-       {% for comment in comments %}
-           {% include 'partials/comment.html' %}
-       {% endfor %}
+    <!-- Show Comments -->
+    {% for comment in comments %}
+        {% include 'partials/comment.html' %}
+    {% endfor %}

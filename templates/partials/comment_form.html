@@ -1,9 +1,10 @@
 <!-- templates/partials/comment_form.html -->
+<form action='/videogame/comments' method='post'>
+    <fieldset>
+<form>
 
 <form action='/videogame/comments' method='POST'>
     <input type='hidden' value='{{ videogame._id }}' name='videogame_id'/>
-    <fieldset>
-<form>
     <fieldset>
         <legend>Add a Comment</legend>
         <!-- TITLE -->

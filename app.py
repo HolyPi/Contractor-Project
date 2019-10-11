@@ -34,7 +34,7 @@ def videogame_index():
 def videogame_show(videogame_id):
     "Individual Videogame"
     videogame = videogames.find_one({'_id': ObjectId(videogame_id)})
-    videogame_comments = comments.find({'videogame_id': ObjectId(videogame_id)})
+    videogame_comments = comments.find({'_id': ObjectId(videogame_id)})
     return render_template('videogame_show.html', videogame=videogame, comment=videogame_comments)
 
 
@@ -68,14 +68,9 @@ def view_cart():
 @app.route("/cart/<videogame_id>/delete", methods=['POST'])
 def remove_from_cart(videogame_id):
     "Removes from cart"
-    cart.delete_one({'_id':ObjectId(videogame_id)})
+    cart.delete_one({'_id':ObjectId('videogame_id')})
     return redirect(url_for('view_cart'))
 
-@app.route("/<videogame_id>/checkout")
-def view_checkout(videogame_id):
-    "Purchase screen"
-    cart.delete_many({'_id':ObjectId(videogame_id)})
-    return render_template("purchase.html")
 
 @app.route('/videogame/comments', methods=['POST'])
 def comments_new():
@@ -89,6 +84,7 @@ def comments_new():
     comment_id = comments.insert_one(comment).inserted_id
     return redirect(url_for('videogame_show', videogame_id=request.form.get('videogame_id')))
 
+
 @app.route('/videogame/comments/<comment_id>', methods=['POST'])
 def comments_delete(comment_id):
     """Action to delete a comment."""
@@ -96,11 +92,13 @@ def comments_delete(comment_id):
     comments.delete_one({'_id': ObjectId(comment_id)})
     return redirect(url_for('videogame_show', videogame_id=comment.get('videogame_id')))
 
+
 @app.route('/videogame/comments/<comment_id>/edit')
 def comment_edit(comment_id):
     "Edits comments"
     comment = comments.find_one({'_id': ObjectId(comment_id)})
     return render_template('comment_edit.html', comment=comment)
+
 
 @app.route('/videogame/comments/<comment_id>', methods=['POST'])
 def comment_update(comment_id):
