@@ -27,7 +27,7 @@ videogames.insert_many(
     {'title': 'Yakuza 0', 'price': 14.49, 'image': "https://images-na.ssl-images-amazon.com/images/I/810MJ9frzIL._SL1500_.jpg"},
     {'title': 'Fire Emblem Fates Birthright', 'price': 19.99, 'image': "https://media.gamestop.com/i/gamestop/10126804/Fire-Emblem-Fates-Birthright?$pdp$"} ])
 
-# client = MongoClient('mongodb://localhost:27017/')
+# client = MongoClient('mongodb://localhost:27017/') b
 
 @app.route('/')
 def videogame_index():
@@ -119,4 +119,4 @@ def comment_update(comment_id):
 
 
 if app.name == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000)
+  app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
