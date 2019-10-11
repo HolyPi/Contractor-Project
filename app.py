@@ -15,17 +15,17 @@ comments = db.comments
 cart = db.cart
 cart.delete_many({})
 
-
+#Videogames database was disabled because it was going to be pushed to Heroku app twice
 videogames.delete_many({})
-# videogames.insert_many(
-    # [{'title': 'Persona 3', 'price': 22.22, 'image': "https://images-na.ssl-images-amazon.com/images/I/81yTRFRr23L.AC_SL1500_.jpg"},
-    # {'title': 'Persona 5', 'price': 59.99, 'image': "https://media.gamestop.com/i/gamestop/10146553/Persona-5"},
-    # {'title': 'Metal Gear Solid: Snake Eater', 'price': 14.99, 'image': "https://http2.mlstatic.com/metal-gear-solid-3-snake-eater-ps2-patch-leia-desc-D_NQ_NP_778579-MLB31218428427_062019-F.jpg"},
-    # {'title': 'Danganronpa trilogy', 'price': 59.99, 'image': "https://images-na.ssl-images-amazon.com/images/I/81sLio1GoeL._AC_SX430_.jpg"},
-    # {'title': 'Ace attorney', 'price': 14.99, 'image': "https://vignette.wikia.nocookie.net/aceattorney/images/d/db/JFA_Box_Art.png/revision/latest?cb=20151028223624"},
-    # {'title': 'The World Ends With You', 'price': 27.99, 'image': "https://media.gamestop.com/i/gamestop/10157970/The-World-Ends-with-You-Final-Remix"},
-    # {'title': 'Yakuza 0', 'price': 14.49, 'image': "https://images-na.ssl-images-amazon.com/images/I/810MJ9frzIL._SL1500_.jpg"},
-    # {'title': 'Fire Emblem Fates Birthright', 'price': 19.99, 'image': "https://media.gamestop.com/i/gamestop/10126804/Fire-Emblem-Fates-Birthright?$pdp$"} ])
+videogames.insert_many(
+    [{'title': 'Persona 3', 'price': 22.22, 'image': "https://images-na.ssl-images-amazon.com/images/I/81yTRFRr23L.AC_SL1500_.jpg"},
+    {'title': 'Persona 5', 'price': 59.99, 'image': "https://media.gamestop.com/i/gamestop/10146553/Persona-5"},
+    {'title': 'Metal Gear Solid: Snake Eater', 'price': 14.99, 'image': "https://http2.mlstatic.com/metal-gear-solid-3-snake-eater-ps2-patch-leia-desc-D_NQ_NP_778579-MLB31218428427_062019-F.jpg"},
+    {'title': 'Danganronpa trilogy', 'price': 59.99, 'image': "https://images-na.ssl-images-amazon.com/images/I/81sLio1GoeL._AC_SX430_.jpg"},
+    {'title': 'Ace attorney', 'price': 14.99, 'image': "https://vignette.wikia.nocookie.net/aceattorney/images/d/db/JFA_Box_Art.png/revision/latest?cb=20151028223624"},
+    {'title': 'The World Ends With You', 'price': 27.99, 'image': "https://media.gamestop.com/i/gamestop/10157970/The-World-Ends-with-You-Final-Remix"},
+    {'title': 'Yakuza 0', 'price': 14.49, 'image': "https://images-na.ssl-images-amazon.com/images/I/810MJ9frzIL._SL1500_.jpg"},
+    {'title': 'Fire Emblem Fates Birthright', 'price': 19.99, 'image': "https://media.gamestop.com/i/gamestop/10126804/Fire-Emblem-Fates-Birthright?$pdp$"} ])
 
 # client = MongoClient('mongodb://localhost:27017/') b
 
@@ -64,15 +64,15 @@ def view_cart():
     total = 0
     Nothing = ""
     for videogame in cart.find():
-        total += int(videogame['price']) * (item['quantity'])
+        total += int(videogame['price'])
     if cart.count_documents({}) <= 0:
         Nothing = "Nothing inside your cart"
-    return render_template("cart.html", videogame=videogame, cart=cart.find(), total = total, Nothing = Nothing)
+    return render_template("cart.html", cart=cart.find(), total = total, Nothing = Nothing)
 
 @app.route("/cart/<videogame_id>/delete", methods=['POST'])
 def remove_from_cart(videogame_id):
     "Removes from cart"
-    cart.delete_one({'_id':ObjectId('videogame_id')})
+    cart.delete_one({'_id':ObjectId(videogame_id)})
     return redirect(url_for('view_cart'))
 
 
@@ -82,11 +82,11 @@ def comments_new():
     comment = {
         'title':request.form.get('title'),
         'content':request.form.get('content'),
-        'videogame_id': ObjectId(request.form.get('videogame_id'))
+        'comment_id': ObjectId(request.form.get('comment_id'))
     }
     print(comment)
     comment_id = comments.insert_one(comment).inserted_id
-    return redirect(url_for('videogame_show', videogame_id=request.form.get('videogame_id')))
+    return redirect(url_for('videogame_show', comment_id=request.form.get('comment_id')))
 
 
 @app.route('/videogame/comments/<comment_id>', methods=['POST'])
@@ -94,7 +94,7 @@ def comments_delete(comment_id):
     """Action to delete a comment."""
     comment = comments.find_one({'_id': ObjectId(comment_id)})
     comments.delete_one({'_id': ObjectId(comment_id)})
-    return redirect(url_for('videogame_show', videogame_id=comment.get('videogame_id')))
+    return redirect(url_for('videogame_show', comment_id=comment.get('comment_id')))
 
 
 @app.route('/videogame/comments/<comment_id>/edit')
